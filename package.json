@@ -1,0 +1,31 @@
+{
+  "name": "@ttgint/fastify-ldap-service",
+  "version": "0.0.1",
+  "description": "A plugin for auth using LDAP service",
+  "main": "plugin.js",
+  "scripts": {
+    "pretest": "npm run lint",
+    "test": " tap --cov test.js",
+    "lint": "standard --fix | snazzy"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/ttgint/fastify-ldap-service.git"
+  },
+  "author": "Cemre Mengu <cemremengu@ttgint.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ttgint/fastify-ldap-service/issues"
+  },
+  "homepage": "https://github.com/ttgint/fastify-ldap-service#readme",
+  "devDependencies": {
+    "fastify": "2.0.0-rc.3",
+    "snazzy": "^8.0.0",
+    "standard": "^12.0.1",
+    "tap": "^12.1.1"
+  },
+  "dependencies": {
+    "fastify-plugin": "^1.4.0",
+    "got": "^9.5.1"
+  }
+}
