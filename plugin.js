@@ -12,13 +12,13 @@ const got = require('got')
  * @returns a decorated fastify instance
  */
 function ldap (fastify, opts, next) {
-  if (opts.url == null && opts.provider == null) {
-    return next(Error('fastify-ldap-service: service url or provider function must be given'))
-  }
+  if (opts.provider == null) return next(Error('fastify-ldap-service: provider is required'))
 
-  if (opts.url != null) {
+  const provider = opts.provider
+
+  if (typeof provider === 'string') {
     fastify.decorate('ldap', async function (username, password) {
-      const response = await got.post(opts.url, {
+      const response = await got.post(provider, {
         json: true,
         body: {
           username,
@@ -31,12 +31,12 @@ function ldap (fastify, opts, next) {
     return next()
   }
 
-  if (typeof opts.provider !== 'function') {
-    return next(Error('fastify-ldap-service: provider must be a function'))
+  if (typeof provider === 'function') {
+    fastify.decorate('ldap', provider)
+    return next()
   }
 
-  fastify.decorate('ldap', opts.provider)
-  return next()
+  return next(Error('fastify-ldap-service: provider must be a url or function'))
 }
 
 module.exports = fp(ldap, {

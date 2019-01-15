@@ -10,7 +10,7 @@ test('should error if no opts are provided', (t) => {
   fastify.register(plugin)
 
   fastify.ready(err => {
-    t.is(err.message, 'fastify-ldap-service: service url or provider function must be given')
+    t.is(err.message, 'fastify-ldap-service: provider is required')
     fastify.close()
   })
 })
@@ -38,7 +38,7 @@ test('provider must be a function', (t) => {
   fastify.register(plugin, { provider: 3 })
 
   fastify.ready(err => {
-    t.is(err.message, 'fastify-ldap-service: provider must be a function')
+    t.is(err.message, 'fastify-ldap-service: provider must be a url or function')
     fastify.close()
   })
 })
@@ -48,23 +48,7 @@ test('should use url', (t) => {
 
   const fastify = Fastify()
 
-  fastify.register(plugin, { url: 'https://jsonplaceholder.typicode.com/posts' })
-
-  fastify.ready(err => {
-    t.error(err)
-    fastify.ldap('dummy', 'dummy').then(result => {
-      t.strictSame(result, { username: 'dummy', password: 'dummy', id: 101 })
-      fastify.close()
-    })
-  })
-})
-
-test('should prefer url over provider function', (t) => {
-  t.plan(2)
-
-  const fastify = Fastify()
-
-  fastify.register(plugin, { url: 'https://jsonplaceholder.typicode.com/posts', provider: () => ({ name: 'john', department: 'engineering' }) })
+  fastify.register(plugin, { provider: 'https://jsonplaceholder.typicode.com/posts' })
 
   fastify.ready(err => {
     t.error(err)
