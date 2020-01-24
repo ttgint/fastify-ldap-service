@@ -26,6 +26,6 @@
   },
   "dependencies": {
     "fastify-plugin": "^1.4.0",
-    "got": "^9.5.1"
+    "got": "^10.3.0"
   }
 }
